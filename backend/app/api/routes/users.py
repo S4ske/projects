@@ -4,7 +4,7 @@ from uuid import UUID
 from ...crud import get_user_by_id, create_user, get_user_by_email
 from ...models import UserPublic, UserCreate
 
-router = APIRouter(tags=['users'])
+router = APIRouter()
 
 
 @router.post('/')
