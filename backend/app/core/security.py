@@ -1,4 +1,4 @@
-from config import JWT_ALGORITHM, JWT_SECRET_KEY
+from backend.app.core.config import JWT_ALGORITHM, JWT_SECRET_KEY
 from datetime import timedelta, datetime, timezone
 from typing import Any
 import jwt

@@ -1,4 +1,4 @@
-from backend.app.core.config import POSTGRES_URL
-from sqlmodel import create_engine
+from backend.app.core.config import POSTGRES_URL_ASYNC
+from sqlalchemy.ext.asyncio import create_async_engine
 
-engine = create_engine(POSTGRES_URL)
+engine = create_async_engine(POSTGRES_URL_ASYNC)

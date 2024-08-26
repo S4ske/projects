@@ -9,7 +9,7 @@ router = APIRouter()
 
 @router.post('/')
 async def create_user(db_session: SessionDep, user_create: UserCreate) -> UserPublic:
-    user = get_user_by_email(db_session, user_create.email)
+    user = await get_user_by_email(db_session, user_create.email)
     if user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -22,6 +22,6 @@ async def create_user(db_session: SessionDep, user_create: UserCreate) -> UserPu
 
 @router.get('/{id}')
 async def get_user(db_session: SessionDep, id: UUID) -> UserPublic:
-    user_db = get_user_by_id(db_session, id)
+    user_db = await get_user_by_id(db_session, id)
     user_public = UserPublic.model_validate(user_db)
     return user_public
