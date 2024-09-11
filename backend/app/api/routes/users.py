@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, status
-from ..deps import SessionDep
+from backend.app.api.deps import SessionDep
 from uuid import UUID
-from ...crud import get_user_by_id, create_user, get_user_by_email
-from ...models import UserPublic, UserCreate
+from backend.app.crud import get_user_by_id, create_user, get_user_by_email
+from backend.app.models import UserPublic, UserCreate
 
 router = APIRouter()
 
@@ -15,6 +15,7 @@ async def create_user(db_session: SessionDep, user_create: UserCreate) -> UserPu
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='The user with this email already exists in the system.'
         )
+
     user_db = create_user(db_session, user_create)
     user_public = UserPublic.model_validate(user_db)
     return user_public

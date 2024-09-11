@@ -1,12 +1,12 @@
 from ..core.db import engine
-from sqlmodel import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Generator, Annotated
 from fastapi import Depends
 
 
-async def get_db() -> Generator[Session, None, None]:
-    async with Session(engine) as session:
+async def get_db() -> Generator[AsyncSession, None, None]:
+    async with AsyncSession(engine) as session:
         yield session
 
 
-SessionDep = Annotated[Session, Depends(get_db)]
+SessionDep = Annotated[AsyncSession, Depends(get_db)]
