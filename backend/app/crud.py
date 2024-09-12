@@ -21,6 +21,13 @@ async def get_user_by_id(db_session: AsyncSession, id: UUID) -> User | None:
     return user_db
 
 
+async def get_user_by_username(db_session: AsyncSession, username: str) -> User | None:
+    stmt = select(User).where(User.username == username)
+    result = await db_session.execute(stmt)
+    user_db = result.first()
+    return user_db
+
+
 async def get_user_by_email(db_session: AsyncSession, email: str) -> User | None:
     stmt = select(User).where(User.email == email)
     result = await db_session.execute(stmt)
