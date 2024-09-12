@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from backend.app.api.deps import SessionDep
 from uuid import UUID
 from backend.app.crud import get_user_by_id, create_user, get_user_by_email
-from backend.app.models import UserPublic, UserCreate
+from backend.app.schemas import UserPublic, UserCreate
 
 router = APIRouter()
 
