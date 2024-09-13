@@ -5,7 +5,7 @@ import jwt
 from passlib.context import CryptContext
 from sqlalchemy.ext.asyncio import AsyncSession
 from backend.app.models import User
-from backend.app.crud import get_user_by_username
+from backend.app.crud import get_user_by_email
 
 crypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
@@ -26,7 +26,7 @@ def get_password_hash(password: str) -> str:
 
 
 async def authenticate(db_session: AsyncSession, username: str, password: str) -> User | None:
-    user = await get_user_by_username(db_session, username)
+    user = await get_user_by_email(db_session, username)
     if not user:
         return None
     if not verify_password(password, user.hashed_password):
