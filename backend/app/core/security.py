@@ -3,9 +3,6 @@ from datetime import timedelta, datetime, timezone
 from typing import Any
 import jwt
 from passlib.context import CryptContext
-from sqlalchemy.ext.asyncio import AsyncSession
-from backend.app.models import User
-from backend.app.crud import get_user_by_email
 
 crypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
@@ -23,12 +20,3 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     return crypt_context.hash(password)
-
-
-async def authenticate(db_session: AsyncSession, username: str, password: str) -> User | None:
-    user = await get_user_by_email(db_session, username)
-    if not user:
-        return None
-    if not verify_password(password, user.hashed_password):
-        return None
-    return user
