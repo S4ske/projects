@@ -6,7 +6,7 @@ import jwt
 from backend.app.core.config import JWT_SECRET_KEY, JWT_ALGORITHM
 from pydantic import ValidationError
 from backend.app.schemas import TokenPayload
-from backend.app.crud import get_user_by_username
+from backend.app.crud import get_user_by_email
 from backend.app.models import User
 
 
@@ -25,7 +25,7 @@ async def get_current_user(db_session: AsyncSession, token: TokenDep) -> User:
         token_data = TokenPayload(**payload)
     except (jwt.InvalidTokenError, ValidationError):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Could not validate credentials")
-    user = await get_user_by_username(db_session, token_data.sub)
+    user = await get_user_by_email(db_session, token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     if not user.is_active:
