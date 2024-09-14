@@ -32,6 +32,9 @@ class UserUpdateMe(BaseModel):
 class UserPublic(UserBase):
     id: UUID
 
+    class Config:
+        orm_mode = True
+
 
 class UsersPublic(BaseModel):
     data: list[UserPublic]

@@ -7,7 +7,13 @@ from uuid import UUID
 
 
 async def create_user(db_session: AsyncSession, user_create: UserCreate) -> User:
-    user_db = User.model_validate(user_create, update={'hashed_password': get_password_hash(user_create.password)})
+    user_db = User(
+        username=user_create.username,
+        email=user_create.email,
+        hashed_password=get_password_hash(user_create.password),
+        is_active=user_create.is_active,
+        is_superuser=user_create.is_superuser
+    )
     db_session.add(user_db)
     await db_session.commit()
     await db_session.refresh(user_db)
