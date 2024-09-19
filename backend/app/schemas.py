@@ -5,6 +5,7 @@ from uuid import UUID
 class UserBase(BaseModel):
     email: EmailStr = Field(unique=True, index=True, max_length=255)
     is_active: bool = True
+    is_confirmed: bool = False
     is_superuser: bool = False
     username: str | None = Field(default=None, max_length=255)
 
@@ -33,7 +34,7 @@ class UserPublic(UserBase):
     id: UUID
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UsersPublic(BaseModel):
@@ -46,7 +47,7 @@ class UserInDB(UserBase):
     hashes_password: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ProjectBase(BaseModel):

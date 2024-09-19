@@ -29,6 +29,7 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(default=True)
     is_superuser: Mapped[bool] = mapped_column(default=False)
     username = mapped_column(String(255), default=None)
+    is_confirmed: Mapped[bool] = mapped_column(default=False)
 
     projects: Mapped[list['Project']] = relationship(back_populates='members', secondary=users_to_projects)
     tasks: Mapped[list['Task']] = relationship(back_populates='members', secondary=users_to_tasks)
