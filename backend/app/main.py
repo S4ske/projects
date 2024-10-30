@@ -1,8 +1,11 @@
 from fastapi import FastAPI
+from starlette.middleware.sessions import SessionMiddleware
 import uvicorn
 from backend.app.api.main import api_router
 
 app = FastAPI()
+
+app.add_middleware(SessionMiddleware, secret_key='fagotzitoz')
 
 app.include_router(api_router)
 

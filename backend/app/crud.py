@@ -60,13 +60,12 @@ async def authenticate(db_session: AsyncSession, username: str, password: str) -
     return user
 
 
-async def delete_user(db_session: AsyncSession, id: UUID) -> User | None:
-    user_db = await get_user_by_id(db_session, id)
+async def delete_user(db_session: AsyncSession, email: str) -> User | None:
+    user_db = await get_user_by_email(db_session, email)
     if not user_db:
         return None
     await db_session.delete(user_db)
     await db_session.commit()
-    await db_session.refresh(user_db)
     return user_db
 
 
